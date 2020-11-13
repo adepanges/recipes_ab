@@ -2,11 +2,21 @@
     "name": "recipes-ab",
     "version": "1.0.0",
     "description": "",
-    "main": "index.js",
+    "main": "dist/Server.js",
+    "engines": {
+        "node": "12.18.3",
+        "npm": "6.14.6",
+        "yarn": "1.22.10"
+    },
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
         "dev": "concurrently -k -p \"[{name}]\" -n \"APP\" -c \"yellow.bold\" \"npm run app-watch-node\"",
-        "app-watch-node": "NODE_ENV=development nodemon --watch \"src/**/*.ts\" --ignore \"node_modules/**/*\" --exec ts-node src/Server.ts"
+        "app-watch-node": "NODE_ENV=development nodemon --watch \"src/**/*.ts\" --ignore \"node_modules/**/*\" --exec ts-node src/Server.ts",
+        "start": "node dist/Server.js",
+        "build": "rm -rfd dist && npm run build-ts && npm run lint",
+        "lint": "tsc --noEmit && eslint \"**/*.{js,ts}\" --quiet --fix",
+        "build-ts": "tsc --project tsconfig.json",
+        "build-ts:w": "tsc --project tsconfig.json -w"
     },
     "author": "Ade Pangestu",
     "license": "ISC",
