@@ -1,0 +1,46 @@
+{
+    "compilerOptions": {
+        "target": "es2018",
+        "module": "commonjs",
+        "declaration": true,
+        "strict": false,
+        "allowJs": true,
+        "strictPropertyInitialization": false,
+        "experimentalDecorators": true,
+        "emitDecoratorMetadata": true,
+        "esModuleInterop": true,
+        "allowSyntheticDefaultImports": true,
+        "noImplicitAny": true,
+        "moduleResolution": "node",
+        "sourceMap": true,
+        "outDir": "dist",
+        "baseUrl": "./",
+        "paths": {
+            "*": [
+                "node_modules/*"
+            ]
+        },
+        "typeRoots": [
+            "./node_modules/@types",
+            "./types"
+        ],
+        "types": [
+            "@types/node"
+        ],
+        "lib": [
+            "es7",
+            "dom",
+            "esnext.asynciterable"
+        ]
+    },
+    "include": [
+        "src/*",
+        "src/controllers/**/*",
+        "src/interfaces/**/*",
+        "src/services/**/*"
+    ],
+    "exclude": [
+        "node_modules",
+        "src/resources/sun/*"
+    ]
+}
