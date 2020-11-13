@@ -49,25 +49,31 @@ if (!fs.existsSync(firebaseFile)) {
 
 export const SESSION_SECRET = process.env["SESSION_SECRET"];
 export const RECIPES_AB_URL = process.env["RECIPES_AB_URL"] || "http://localhost:3000";
-export const RECIPES_AB_PORT = process.env["RECIPES_AB_PORT"] || 3000;
+export const RECIPES_AB_PORT = process.env.PORT || process.env["RECIPES_AB_PORT"] || 3000;
 export const RECIPES_AB_MONGODB_URI = process.env["RECIPES_AB_MONGODB_URI"] || "";
 export const FIREBASE_CONFIG = firebaseConfig;
 export const FIREBASE_DATABASE_URL = process.env["FIREBASE_DATABASE_URL"] || "";
 export const FIREBASE_STORAGE_BUCKET = process.env["FIREBASE_STORAGE_BUCKET"] || "";
 export const FIREBASE_STORAGE_BASE_URL = process.env["FIREBASE_STORAGE_BASE_URL"] || "";
 
+if (!RECIPES_AB_PORT) {
+    console.log("No RECIPES_AB_PORT provided. Please set RECIPES_AB_PORT environment variable.");
+    errorCount++;
+}
+
 if (!SESSION_SECRET) {
     console.log("No client secret provided. Please set SESSION_SECRET environment variable.");
     errorCount++;
 }
+
 if (!RECIPES_AB_MONGODB_URI) {
     console.log("No mongo connection string provided. Please set RECIPES_AB_MONGODB_URI environment variable.");
     errorCount++;
 }
 
-// if (!FIREBASE_DATABASE_URL) {
-//     console.log("No firebase database url provided. Please set FIREBASE_DATABASE_URL environment variable.");
-//     errorCount++;
-// }
+if (!FIREBASE_DATABASE_URL) {
+    console.log("No firebase database url provided. Please set FIREBASE_DATABASE_URL environment variable.");
+    errorCount++;
+}
 
 // if (errorCount) process.exit(1);
