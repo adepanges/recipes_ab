@@ -4,7 +4,7 @@
 **/
 
 import { Property } from "@tsed/schema";
-import { IBase } from "../../interfaces/model/IBase";
+import { IBase } from "../interfaces/model/IBase";
 import { Default } from "@tsed/schema";
 import { Model, ObjectID } from "@tsed/mongoose";
 

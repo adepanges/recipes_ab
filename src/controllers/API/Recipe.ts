@@ -1,3 +1,9 @@
+/**
+  * @copyright Technical Test AccelByte
+  * @author Ade Pangestu
+**/
+
+
 "use strict";
 
 import { Inject, Context, Controller, Get, Put, Post, Delete, BodyParams, PathParams } from "@tsed/common";
@@ -7,14 +13,14 @@ import B from "bluebird";
 import { ObjectId } from "mongodb";
 
 import Base from "../Base";
-import Recipe from "../../services/models/Recipe";
+import Recipe from "../../models/Recipe";
 import RecipeService from "../../services/Recipe";
 
 import { IRead } from "../../interfaces/controller/IRead";
 import { IWrite } from "../../interfaces/controller/IWrite";
 
 @Controller("/recipes")
-export class ApiRecipeController extends Base implements IRead, IWrite {
+export class ApiRecipeCtrl implements IRead, IWrite {
 
     @Inject(RecipeService)
     private service: RecipeService;

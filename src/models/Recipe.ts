@@ -8,7 +8,7 @@ import { Property } from "@tsed/schema";
 import { Model } from "@tsed/mongoose";
 import { Default, Enum, Required } from "@tsed/schema";
 
-import { IRecipe, IIngredient, RecipeType } from "../../interfaces/model/IRecipe";
+import { IRecipe, IIngredient, RecipeType } from "../interfaces/model/IRecipe";
 import { Base } from "./Base";
 
 @Model()

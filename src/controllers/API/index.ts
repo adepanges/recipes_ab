@@ -1,7 +1,7 @@
-import { ApiRecipeController } from "./Recipe";
+import { ApiRecipeCtrl } from "./Recipe";
 
 const API = [
-    ApiRecipeController
+    ApiRecipeCtrl
 ];
 
 export default API;

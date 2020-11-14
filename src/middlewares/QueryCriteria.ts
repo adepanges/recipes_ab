@@ -108,9 +108,6 @@ class QueryCriteria implements IQueryCriteria {
 
             criteria.options.skip = (criteria.page - 1) * criteria.options.limit;
 
-            context.set("criteria", criteria);
-            console.log("criteria", criteria);
-
             next();
 
         });
