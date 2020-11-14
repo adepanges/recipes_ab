@@ -17,7 +17,7 @@ export default {
             axios.get(`${BASE_URL}${ENDPOINT}`, {
                 params: {
                     filter: state.filter,
-                    fields: "_id name photos[0] type",
+                    fields: "_id name photos type",
                     skip: state.skip || 0,
                     limit: state.limit || 10
                 }
