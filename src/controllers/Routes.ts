@@ -1,9 +1,7 @@
 import API from "./API";
-import { HomeController} from "./Home";
 
 const Routes = {
-    "/api": API,
-    "/": [ HomeController ]
+    "/api": API
 };
 
 export default Routes;

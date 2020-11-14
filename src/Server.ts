@@ -29,6 +29,8 @@ import ResourceNotFoundFilter from "./filters/ResourceNotFound";
 import Routes from "./controllers/Routes";
 
 const rootDir = Path.resolve(__dirname);
+const clientDir = Path.join(rootDir, "public");
+
 @Configuration({
     rootDir,
     acceptMimes: ["application/json"],
@@ -46,11 +48,7 @@ const rootDir = Path.resolve(__dirname);
         },
     },
     statics: {
-        "/": [
-            {
-                root: `${rootDir}/public`
-            }
-        ]
+        "/": clientDir
     },
     mongoose: [
         {
@@ -85,7 +83,7 @@ export default class Server {
     @Constant("env")
     env: Env;
 
-    public $beforeRoutesInit(): void | Promise<any> {
+    $beforeRoutesInit(): void | Promise<any> {
         if (this.env === Env.PROD) {
             // do something
         }
@@ -111,5 +109,20 @@ export default class Server {
             }));
 
         this.app.use(QueryCriteriaMiddleware);
+    }
+
+    $afterRoutesInit() {
+        this.app.get("/", (req: any, res: any) => {
+            if (!res.headersSent) {
+                // prevent index.html caching
+                res.set({
+                    "Cache-Control": "no-cache, no-store, must-revalidate",
+                    "Pragma": "no-cache"
+                });
+            }
+        });
+        this.app.get(`*`, (req: any, res: any) => {
+            res.sendFile(Path.join(clientDir, "index.html"));
+        });
     }
 }
