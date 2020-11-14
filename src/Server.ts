@@ -10,12 +10,12 @@ import { RECIPES_AB_PORT, ENVIRONMENT, RECIPES_AB_MONGODB_URI } from "./Config";
 import { Configuration, Inject, PlatformApplication, Constant } from "@tsed/common";
 import "@tsed/mongoose";
 import * as Path from "path";
+import cors from "cors";
 import bodyParser from "body-parser";
 import compression from "compression";
 import cookieParser from "cookie-parser";
 import methodOverride from "method-override";
 import helmet from "helmet";
-import nunjucks from "nunjucks";
 
 import QueryCriteriaMiddleware from "./middlewares/QueryCriteria";
 
@@ -41,18 +41,14 @@ const rootDir = Path.resolve(__dirname);
         root: `${rootDir}/../resources/shop/views`,
         viewEngine: "nunjucks",
         extensions: {
-            "njk": "nunjucks"
+            "njk": "nunjucks",
+            "html": "ejs"
         },
-        options: {
-            nunjucks: {
-                requires: nunjucks.configure(`${rootDir}/../resources/shop/views`)
-            }
-        }
     },
     statics: {
-        "/assets": [
+        "/": [
             {
-                root: `${rootDir}/../resources/shop/public/`
+                root: `${rootDir}/public`
             }
         ]
     },
@@ -94,7 +90,20 @@ export default class Server {
             // do something
         }
 
+        let whitelist = ['http://localhost:3000', 'http://localhost:8080', 'https://recipes-ab.herokuapp.com']
+        let corsOptions = {
+            origin: function (origin: any, callback: any) {
+                console.log("origin", origin);
+                if (whitelist.includes(origin)) {
+                    callback(null, true)
+                } else {
+                    callback(new Error('Not allowed by CORS'))
+                }
+            }
+        }
+
         this.app
+            .use(cors(corsOptions))
             .use(helmet())
             .use(cookieParser())
             .use(compression())
