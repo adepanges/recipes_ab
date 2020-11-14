@@ -38,7 +38,7 @@ const rootDir = Path.resolve(__dirname);
     uploadDir: `${rootDir}/uploads`,
     mount: Routes,
     views: {
-        root: `${rootDir}/../resources/shop/views`,
+        root: `${rootDir}/resources/views`,
         viewEngine: "nunjucks",
         extensions: {
             "njk": "nunjucks",
