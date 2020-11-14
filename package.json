@@ -12,7 +12,7 @@
         "test": "echo \"Error: no test specified\" && exit 1",
         "dev": "concurrently -k -p \"[{name}]\" -n \"APP\" -c \"yellow.bold\" \"npm run watch-ts\"",
         "watch-ts": "NODE_ENV=development nodemon --watch \"src/**/*.ts\" --ignore \"node_modules/**/*\" --exec ts-node src/index.ts",
-        "start": "node dist/Server.js",
+        "start": "node dist",
         "lint": "tsc --noEmit && eslint \"**/*.{js,ts}\" --quiet --fix",
         "copy-static-assets": "rm -rfd dist/public && node deployment/copyStaticAssets.js",
         "frontend-build": "cd ./src/resources/frontend && npm install && npm run build && cd ../../../ && npm run copy-static-assets",
