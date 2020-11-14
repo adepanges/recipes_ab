@@ -1,9 +1,13 @@
-import { Catch, ExceptionFilterMethods, PlatformContext, ResourceNotFound } from "@tsed/common";
+import { Inject, Catch, ExceptionFilterMethods, PlatformContext, ResourceNotFound, PlatformViews } from "@tsed/common";
 
 @Catch(ResourceNotFound)
 export default class ResourceNotFoundFilter implements ExceptionFilterMethods {
+
+    @Inject()
+    platformViews: PlatformViews;
+
     transform(data: any) {
-        return { success: false, data };
+        return data
     }
 
     async catch(exception: ResourceNotFound, context: PlatformContext) {
@@ -14,15 +18,10 @@ export default class ResourceNotFoundFilter implements ExceptionFilterMethods {
             message: exception.message,
             url: exception.url
         };
+        const result = await this.platformViews.render("400.njk", obj);
 
-        // Json response
-        response
-            .status(exception.status)
-            .body(obj);
-
-        // Or with ejs/handlers/etc...
         await response
-            .status(exception.status)
-            .render("404.ejs", obj);
+        .status(exception.status)
+        .body(result);
     }
 }

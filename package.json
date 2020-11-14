@@ -9,17 +9,20 @@
         "yarn": "1.22.10"
     },
     "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1",
-        "dev": "concurrently -k -p \"[{name}]\" -n \"APP\" -c \"yellow.bold\" \"npm run watch-ts\"",
-        "watch-ts": "NODE_ENV=development nodemon --watch \"src/**/*.ts\" --ignore \"node_modules/**/*\" --exec ts-node src/index.ts",
         "start": "node dist",
+        "start-local": "NODE_ENV=development node dist",
+        "dev": "concurrently -k -p \"[{name}]\" -n \"APP\" -c \"yellow.bold\" \"npm run watch-ts\"",
+        "dev-build": "NODE_ENV=development node dist",
+        "watch-ts": "NODE_ENV=development nodemon --watch \"src/**/*.ts\" --ignore \"node_modules/**/*\" --exec ts-node src/index.ts",
         "lint": "tsc --noEmit && eslint \"**/*.{js,ts}\" --quiet --fix",
         "copy-static-assets": "rm -rfd dist/public && node deployment/copyStaticAssets.js",
-        "frontend-build": "cd ./src/resources/frontend && npm install && npm run build && cd ../../../ && npm run copy-static-assets",
         "build-ts": "tsc --project tsconfig.json",
         "build-ts:w": "tsc --project tsconfig.json -w",
-        "build": "rm -rfd dist && npm run build-ts && npm run lint && npm run frontend-build",
-        "dev-build": "NODE_ENV=development node dist"
+        "frontend-build-prod": "cd ./src/resources/frontend && npm install && npm run build && cd ../../../ && npm run copy-static-assets",
+        "frontend-build-local": "cd ./src/resources/frontend && npm install && npm run build-local && cd ../../../ && npm run copy-static-assets",
+        "build": "rm -rfd dist && npm run build-ts && npm run lint && npm run frontend-build-prod",
+        "build-local": "rm -rfd dist && npm run build-ts && npm run lint && npm run frontend-build-local",
+        "test": "echo \"Error: no test specified\" && exit 1"
     },
     "author": "Ade Pangestu",
     "license": "ISC",

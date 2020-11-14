@@ -16,6 +16,7 @@ import compression from "compression";
 import cookieParser from "cookie-parser";
 import methodOverride from "method-override";
 import helmet from "helmet";
+import nunjucks from "nunjucks";
 
 import QueryCriteriaMiddleware from "./middlewares/QueryCriteria";
 
@@ -24,12 +25,16 @@ import JsonResponseFilter from "./filters/JsonResponse";
 import HttpExceptionFilter from "./filters/HttpException";
 import ErrorFilter from "./filters/Error";
 import ResourceNotFoundFilter from "./filters/ResourceNotFound";
+import AnyResponseFilter from "./filters/AnyResponse";
 
 // Controllers
 import Routes from "./controllers/Routes";
 
 const rootDir = Path.resolve(__dirname);
 const clientDir = Path.join(rootDir, "public");
+const viewsDir = Path.join(rootDir, "resources","views");
+
+console.log("viewsDir", viewsDir)
 
 @Configuration({
     rootDir,
@@ -40,12 +45,17 @@ const clientDir = Path.join(rootDir, "public");
     uploadDir: `${rootDir}/uploads`,
     mount: Routes,
     views: {
-        root: `${rootDir}/resources/views`,
+        root: viewsDir,
         viewEngine: "nunjucks",
         extensions: {
-            "njk": "nunjucks",
-            "html": "ejs"
+            "html": "nunjucks",
+            "njk": "nunjucks"
         },
+        options: {
+            nunjucks: {
+                requires: nunjucks.configure(viewsDir)
+            }
+        }
     },
     statics: {
         "/": clientDir
@@ -67,6 +77,7 @@ const clientDir = Path.join(rootDir, "public");
         HttpExceptionFilter,
         HtmlResponseFilter,
         JsonResponseFilter,
+        AnyResponseFilter,
     ]
 })
 export default class Server {
@@ -121,7 +132,8 @@ export default class Server {
                 });
             }
         });
-        this.app.get(`*`, (req: any, res: any) => {
+        this.app.get(/^\/(recipe)\/.+$/, (req: any, res: any) => {
+            console.log("asu palah mengeneh");
             res.sendFile(Path.join(clientDir, "index.html"));
         });
     }

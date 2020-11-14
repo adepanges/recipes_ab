@@ -1,14 +1,17 @@
-import { Catch, PlatformContext, ExceptionFilterMethods, ResponseErrorObject } from "@tsed/common";
+import { Inject, Catch, PlatformContext, ExceptionFilterMethods, ResponseErrorObject, PlatformViews } from "@tsed/common";
 import { Exception } from "@tsed/exceptions";
 
 @Catch(Error)
 export default class ErrorFilter implements ExceptionFilterMethods {
 
+    @Inject()
+    platformViews: PlatformViews;
+
     transform(data: any) {
-        return { success: false, data };
+        return data
     }
 
-    catch(exception: Exception, ctx: PlatformContext) {
+    async catch(exception: Exception, ctx: PlatformContext) {
         const { response, logger } = ctx;
         const error = this.mapError(exception);
         const headers = this.getHeaders(exception);
@@ -16,11 +19,12 @@ export default class ErrorFilter implements ExceptionFilterMethods {
         logger.error({
             error
         });
+        const result = await this.platformViews.render("500.njk", error);
 
-        response
+        await response
             .setHeaders(headers)
-            .status(error.status || 500)
-            .body(error);
+            .status(error.status)
+            .body(result);
     }
 
     mapError(error: any) {
