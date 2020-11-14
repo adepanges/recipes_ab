@@ -1,5 +1,5 @@
 <template>
-    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+    <div class="recipe-box col-xs-12 col-sm-6 col-md-4 col-lg-3">
         <div class="card">
             <img class="card-img-top" :src="coverImg" alt="Card image cap" @error="imageLoadError">
             <div class="card-body">
@@ -24,8 +24,15 @@ export default {
     }),
     computed: {
         coverImg(){
-            return this.recipe && this.recipe.photos && this.recipe.photos[0] || "bad"
+            return this.recipe && this.recipe.photos && this.recipe.photos[0] || "not_found"
         }
     }
 }
 </script>
+
+<style lang="scss" scoped>
+.recipe-box {
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+</style>

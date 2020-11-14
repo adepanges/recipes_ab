@@ -26,5 +26,7 @@ export class HomeController extends BaseController implements IRead, IWrite {
     @Get()
     @Returns(200).ContentType("text/html")
     @View("index.html")
-    index(@Context() context: Context) {}
+    index(@Context() context: Context) {
+        return { success: true };
+    }
 }

@@ -15,10 +15,11 @@
         "start": "node dist/Server.js",
         "lint": "tsc --noEmit && eslint \"**/*.{js,ts}\" --quiet --fix",
         "copy-static-assets": "rm -rfd dist/public && node deployment/copyStaticAssets.js",
-        "frontend-install": "cd ./src/resources/frontend && npm install && npm run build && npm run copy-static-assets",
+        "frontend-build": "cd ./src/resources/frontend && npm install && npm run build && cd ../../../ && npm run copy-static-assets",
         "build-ts": "tsc --project tsconfig.json",
         "build-ts:w": "tsc --project tsconfig.json -w",
-        "build": "npm run frontend-install && rm -rfd dist && npm run build-ts && npm run lint"
+        "build": "rm -rfd dist && npm run build-ts && npm run lint && npm run frontend-build",
+        "dev-build": "NODE_ENV=development node dist"
     },
     "author": "Ade Pangestu",
     "license": "ISC",

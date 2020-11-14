@@ -29,7 +29,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.recipeLayout {
+#recipeLayout {
     h1 {
         margin-top: 10px;
     }

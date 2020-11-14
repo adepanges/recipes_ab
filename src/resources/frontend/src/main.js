@@ -1,5 +1,3 @@
-import '@babel/polyfill'
-import 'mutationobserver-shim'
 import Vue from 'vue'
 import axios from 'axios'
 import './plugins/bootstrap-vue'

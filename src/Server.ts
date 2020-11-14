@@ -6,7 +6,7 @@
 "use strict";
 
 import { Env } from "@tsed/core";
-import { RECIPES_AB_PORT, ENVIRONMENT, RECIPES_AB_MONGODB_URI } from "./Config";
+import { RECIPES_AB_PORT, ENVIRONMENT, RECIPES_AB_MONGODB_URI, WHITELIST_ORIGIN } from "./Config";
 import { Configuration, Inject, PlatformApplication, Constant } from "@tsed/common";
 import "@tsed/mongoose";
 import * as Path from "path";
@@ -90,20 +90,17 @@ export default class Server {
             // do something
         }
 
-        let whitelist = ['http://localhost:3000', 'http://localhost:8080', 'https://recipes-ab.herokuapp.com']
-        let corsOptions = {
-            origin: function (origin: any, callback: any) {
-                console.log("origin", origin);
-                if (whitelist.includes(origin)) {
-                    callback(null, true)
-                } else {
-                    callback(new Error('Not allowed by CORS'))
-                }
-            }
-        }
-
         this.app
-            .use(cors(corsOptions))
+            .use(cors({
+                origin: function (origin: any, callback: any) {
+                    console.log("origin", origin);
+                    if (!origin || WHITELIST_ORIGIN.includes(origin)) {
+                        callback(null, true);
+                    } else {
+                        callback(new Error("Not allowed by CORS"));
+                    }
+                }
+            }))
             .use(helmet())
             .use(cookieParser())
             .use(compression())

@@ -55,6 +55,7 @@ export const FIREBASE_CONFIG = firebaseConfig;
 export const FIREBASE_DATABASE_URL = process.env["FIREBASE_DATABASE_URL"] || "";
 export const FIREBASE_STORAGE_BUCKET = process.env["FIREBASE_STORAGE_BUCKET"] || "";
 export const FIREBASE_STORAGE_BASE_URL = process.env["FIREBASE_STORAGE_BASE_URL"] || "";
+export const WHITELIST_ORIGIN = ["http://localhost:3000", "http://localhost:8080", "https://recipes-ab.herokuapp.com"];
 
 if (!RECIPES_AB_PORT) {
     console.log("No RECIPES_AB_PORT provided. Please set RECIPES_AB_PORT environment variable.");
