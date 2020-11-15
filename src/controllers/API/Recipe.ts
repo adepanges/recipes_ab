@@ -2,8 +2,6 @@
   * @copyright Technical Test AccelByte
   * @author Ade Pangestu
 **/
-
-
 "use strict";
 
 import { Inject, Context, Controller, Get, Put, Post, Delete, BodyParams, PathParams } from "@tsed/common";
@@ -12,7 +10,6 @@ import { Returns } from "@tsed/schema";
 import B from "bluebird";
 import { ObjectId } from "mongodb";
 
-import Base from "../Base";
 import Recipe from "../../models/Recipe";
 import RecipeService from "../../services/Recipe";
 
@@ -25,17 +22,34 @@ export class ApiRecipeCtrl implements IRead, IWrite {
     @Inject(RecipeService)
     private service: RecipeService;
 
+    parseFilter(filter: any){
+        if (filter.keyword) {
+            const keyword = `${filter.keyword}|${String(filter.keyword).split(" ").join("|")}`
+            filter.$or = [
+                { name: { $regex: keyword, $options: "i" } },
+                { description: { $regex: keyword, $options: "i" } },
+                { type: { $regex: keyword, $options: "i" } },
+            ]
+            delete filter.keyword
+        }
+        return filter
+    }
+
     @Get()
     @Returns(200, Recipe).ContentType("application/json")
     find(@Context() context: Context) {
-        const { filter, fields, options } = context.get("criteria");
+        let { filter, fields, options } = context.get("criteria");
+        filter = this.parseFilter(filter);
+
         return B.try(() => this.service.find(context, filter, fields, options));
     }
 
     @Get("/count")
     @Returns(200, Number).ContentType("application/json")
     count(@Context() context: Context) {
-        const { filter } = context.get("criteria");
+        let { filter } = context.get("criteria");
+        filter = this.parseFilter(filter);
+
         return B.try(() => this.service.count(context, filter));
     }
 

@@ -2,6 +2,7 @@
   * @copyright Technical Test AccelByte
   * @author Ade Pangestu
 **/
+"use strict";
 
 import { IGlobal } from "./IGlobal";
 import { Context } from "@tsed/common";

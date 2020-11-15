@@ -1,3 +1,9 @@
+/**
+  * @copyright Technical Test AccelByte
+  * @author Ade Pangestu
+**/
+"use strict";
+
 import { Inject, Catch, PlatformContext, ExceptionFilterMethods, ResponseErrorObject, PlatformViews } from "@tsed/common";
 import { Exception } from "@tsed/exceptions";
 

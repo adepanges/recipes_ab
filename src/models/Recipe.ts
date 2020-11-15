@@ -1,8 +1,8 @@
-"use strict";
 /**
-  * @copyright 2020 - Batik Giri Alam
+  * @copyright Technical Test AccelByte
   * @author Ade Pangestu
 **/
+"use strict";
 
 import { Property } from "@tsed/schema";
 import { Model } from "@tsed/mongoose";

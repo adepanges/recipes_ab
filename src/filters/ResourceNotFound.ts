@@ -1,3 +1,9 @@
+/**
+  * @copyright Technical Test AccelByte
+  * @author Ade Pangestu
+**/
+"use strict";
+
 import { Inject, Catch, ExceptionFilterMethods, PlatformContext, ResourceNotFound, PlatformViews } from "@tsed/common";
 
 @Catch(ResourceNotFound)

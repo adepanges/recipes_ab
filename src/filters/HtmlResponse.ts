@@ -1,3 +1,9 @@
+/**
+  * @copyright Technical Test AccelByte
+  * @author Ade Pangestu
+**/
+"use strict";
+
 import { ResponseFilter, Context, ResponseFilterMethods } from "@tsed/common";
 
 @ResponseFilter("text/html")

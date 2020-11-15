@@ -1,3 +1,9 @@
+/**
+  * @copyright Technical Test AccelByte
+  * @author Ade Pangestu
+**/
+"use strict";
+
 import B from "bluebird";
 import { Context, IMiddleware, Middleware, Req, Next, QueryParams } from "@tsed/common";
 import { BadRequest, Forbidden, NotFound } from "@tsed/exceptions";

@@ -2,13 +2,14 @@
   * @copyright Technical Test AccelByte
   * @author Ade Pangestu
 **/
+"use strict";
 
 import { Env } from "@tsed/core";
 import dotenv from "dotenv";
 import fs from "fs";
 
-let envFile = ".env_production";
-let firebaseFile = "./firebase-production.json";
+let envFile = ".env";
+let firebaseFile = "./firebase.config.json";
 let errorCount = 0;
 let firebaseConfig: any = null;
 
@@ -18,7 +19,7 @@ switch (NODE_ENV) {
     case "production":
         ENVIRONMENT_NAME = "PROD";
         envFile = ".env_production";
-        firebaseFile = ".firebase-production.json";
+        firebaseFile = "./firebase-production.json";
         break;
     case "development":
         ENVIRONMENT_NAME = "DEV";
@@ -30,21 +31,20 @@ switch (NODE_ENV) {
 export const ENVIRONMENT: Env = Env[ENVIRONMENT_NAME];
 console.log(`ENVIRONMENT: ${ENVIRONMENT}`);
 
-
-if (!fs.existsSync(envFile)) {
-    console.log(`ENV not found: ${envFile}`);
-    errorCount++;
-} else {
+if (fs.existsSync(envFile)) {
     console.log(`Using "${envFile}" file to supply config Environment Variables`);
     dotenv.config({ path: envFile });
+} else if (fs.existsSync(".env")) {
+    console.log(`Using ".env" file to supply config Environment Variables`);
+    dotenv.config({ path: ".env" });
 }
 
-if (!fs.existsSync(firebaseFile)) {
-    console.log(`Firebase config not found: ${firebaseFile}`);
-    errorCount++;
-} else {
+if (fs.existsSync(firebaseFile)) {
     console.log(`Using "${firebaseFile}" file to supply Firebase Config`);
     firebaseConfig = JSON.parse(fs.readFileSync(firebaseFile, { encoding: "utf8", flag: "r" }));
+} else if (fs.existsSync("./firebase.config.json")) {
+    console.log(`Using "firebase.config.json" file to supply Firebase Config`);
+    firebaseConfig = JSON.parse(fs.readFileSync("./firebase.config.json", { encoding: "utf8", flag: "r" }));
 }
 
 export const SESSION_SECRET = process.env["SESSION_SECRET"];
@@ -61,11 +61,12 @@ if (!RECIPES_AB_PORT) {
     console.log("No RECIPES_AB_PORT provided. Please set RECIPES_AB_PORT environment variable.");
     errorCount++;
 }
-
+/*
 if (!SESSION_SECRET) {
     console.log("No client secret provided. Please set SESSION_SECRET environment variable.");
     errorCount++;
 }
+*/
 
 if (!RECIPES_AB_MONGODB_URI) {
     console.log("No mongo connection string provided. Please set RECIPES_AB_MONGODB_URI environment variable.");

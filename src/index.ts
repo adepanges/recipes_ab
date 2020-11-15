@@ -2,7 +2,6 @@
   * @copyright Technical Test AccelByte
   * @author Ade Pangestu
 **/
-
 "use strict";
 
 import { $log } from "@tsed/common";

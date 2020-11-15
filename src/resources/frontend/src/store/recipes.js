@@ -1,5 +1,6 @@
 import { BASE_URL } from "../../config"
 const ENDPOINT = "/api/recipes"
+import B from "bluebird"
 
 export default {
     namespaced: true,
@@ -8,26 +9,27 @@ export default {
         list: [],
         count: 0,
         filter: {},
-        skip: 0,
-        limit: 10
+        page: 1,
     },
 
     actions: {
         getList({ state, commit, rootState }) {
-            axios.get(`${BASE_URL}${ENDPOINT}`, {
+            return axios.get(`${BASE_URL}${ENDPOINT}`, {
                 params: {
                     filter: state.filter,
                     fields: "_id name photos type",
-                    skip: state.skip || 0,
-                    limit: state.limit || 10
+                    page: state.page || 1,
                 }
             })
             .then(result => {
-                if (result.status == 200 && result.data && result.data.data) commit("list", result.data.data)
+                if (result.status == 200 && result.data && result.data.data){
+                    commit("list", result.data.data)
+                    return result.data.data
+                }
             })
         },
         getById({ state, commit, rootState }, _id) {
-            axios.get(`${BASE_URL}${ENDPOINT}`, {
+            return axios.get(`${BASE_URL}${ENDPOINT}`, {
                 params: {
                     filter: { _id },
                     skip: 0,
@@ -35,13 +37,42 @@ export default {
                 }
             })
             .then(result => {
-                if (result.status == 200 && result.data && result.data.data && result.data.data[0]) commit("data", result.data.data[0])
+                if (result.status == 200 && result.data && result.data.data && result.data.data[0]){
+                    commit("data", result.data.data[0])
+                    return result.data.data[0]
+                }
             })
         },
-        getCount({ state, commit, rootState }, _id) {
-            axios.get(`${BASE_URL}${ENDPOINT}/count`)
+        getCount({ state, commit, rootState }) {
+            return axios.get(`${BASE_URL}${ENDPOINT}/count`, {
+                params: {
+                    filter: state.filter
+                }
+            })
             .then(result => {
-                if (result.status == 200 && result.data && result.data.data) commit("count", result.data.data)
+                if (result.status == 200 && result.data && result.data.data){
+                    commit("count", result.data.data)
+                    return result.data.data
+                }
+            })
+        },
+        deleteById({ state, commit, rootState }, _id) {
+            if (confirm('Are you sure you want to delete this?'))
+                return axios.delete(`${BASE_URL}${ENDPOINT}/${_id}`).then(result => result.status == 200)
+            else
+                return false
+        },
+        save({ state, commit, rootState }, payload) {
+            return B.try(() => {
+                if (payload._id) return axios.put(`${BASE_URL}${ENDPOINT}/${payload._id}`, payload)
+                else return axios.post(`${BASE_URL}${ENDPOINT}`, payload)
+            })
+            .then(result => {
+                if (result.status == 200 && result.data && result.data.data) {
+                    return result.data.data._id || true
+                } else {
+                    return false
+                }
             })
         },
     },

@@ -2,6 +2,7 @@
   * @copyright Technical Test AccelByte
   * @author Ade Pangestu
 **/
+"use strict";
 
 import { Context } from "@tsed/common";
 

@@ -2,6 +2,7 @@
   * @copyright Technical Test AccelByte
   * @author Ade Pangestu
 **/
+"use strict";
 
 import { Property } from "@tsed/schema";
 import { IBase } from "../interfaces/model/IBase";

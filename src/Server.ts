@@ -2,7 +2,6 @@
   * @copyright Technical Test AccelByte
   * @author Ade Pangestu
 **/
-
 "use strict";
 
 import { Env } from "@tsed/core";

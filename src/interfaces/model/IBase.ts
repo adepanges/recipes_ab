@@ -2,6 +2,7 @@
   * @copyright Technical Test AccelByte
   * @author Ade Pangestu
 **/
+"use strict";
 
 export interface IBase {
     is_active: boolean;

@@ -2,14 +2,15 @@
   * @copyright Technical Test AccelByte
   * @author Ade Pangestu
 **/
+"use strict";
 
 import { Types } from "mongoose";
 
 export enum RecipeType {
-    MAIN_COURSE = "Main Course",
-    DESSERT = "Dessert",
-    APPETIZER = "Appetizer",
-    DRINK = "Drink"
+    MAIN_COURSE = "main course",
+    DESSERT = "dessert",
+    APPETIZER = "appetizer",
+    DRINK = "drink"
 }
 
 export interface IIngredient {
