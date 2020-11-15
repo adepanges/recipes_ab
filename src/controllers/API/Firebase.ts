@@ -16,8 +16,7 @@ import { IWrite } from "../../interfaces/controller/IWrite";
 @Controller("/firebase")
 export class FirebaseAdminClient implements IRead, IWrite {
 
-    @Inject(FirebaseService)
-    private service: FirebaseService;
+    private service = new FirebaseService();
 
     @Post("/storage/token")
     @Returns(200, Object).ContentType("application/json")
