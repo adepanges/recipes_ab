@@ -62,6 +62,8 @@ if(!firebaseConfig) {
     };
 }
 
+console.log("firebaseConfig", firebaseConfig)
+
 export const SESSION_SECRET = process.env["SESSION_SECRET"];
 export const RECIPES_AB_URL = process.env["RECIPES_AB_URL"] || "http://localhost:3000";
 export const RECIPES_AB_PORT = process.env.PORT || process.env["RECIPES_AB_PORT"] || 3000;

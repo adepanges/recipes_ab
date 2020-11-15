@@ -38,8 +38,8 @@ export default class Firebase {
             type: "storage"
         };
 
-        return this.admin.auth().createCustomToken(uid, payload)
-        .then(token => {
+        return this.App.auth().createCustomToken(uid, payload)
+        .then((token: any) => {
             return {
                 base_url: `${FIREBASE_STORAGE_BASE_URL}/${FIREBASE_STORAGE_BUCKET}`,
                 uid,
@@ -47,7 +47,7 @@ export default class Firebase {
                 token
             };
         })
-        .catch((error) => {
+        .catch((error: any) => {
             console.error("[FIREBASE] Error creating custom token:", error);
         });
     }
