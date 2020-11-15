@@ -13,7 +13,7 @@ export default class ResourceNotFoundFilter implements ExceptionFilterMethods {
     platformViews: PlatformViews;
 
     transform(data: any) {
-        return data
+        return data;
     }
 
     async catch(exception: ResourceNotFound, context: PlatformContext) {

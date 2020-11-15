@@ -33,7 +33,7 @@ const rootDir = Path.resolve(__dirname);
 const clientDir = Path.join(rootDir, "public");
 const viewsDir = Path.join(rootDir, "resources","views");
 
-console.log("viewsDir", viewsDir)
+console.log("viewsDir", viewsDir);
 
 @Configuration({
     rootDir,

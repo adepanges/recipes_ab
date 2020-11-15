@@ -14,7 +14,7 @@ export default class ErrorFilter implements ExceptionFilterMethods {
     platformViews: PlatformViews;
 
     transform(data: any) {
-        return data
+        return data;
     }
 
     async catch(exception: Exception, ctx: PlatformContext) {

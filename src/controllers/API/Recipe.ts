@@ -24,21 +24,23 @@ export class ApiRecipeCtrl implements IRead, IWrite {
 
     parseFilter(filter: any){
         if (filter.keyword) {
-            const keyword = `${filter.keyword}|${String(filter.keyword).split(" ").join("|")}`
+            const keyword = `${filter.keyword}|${String(filter.keyword).split(" ").join("|")}`;
             filter.$or = [
                 { name: { $regex: keyword, $options: "i" } },
                 { description: { $regex: keyword, $options: "i" } },
                 { type: { $regex: keyword, $options: "i" } },
-            ]
-            delete filter.keyword
+            ];
+            delete filter.keyword;
         }
-        return filter
+        return filter;
     }
 
     @Get()
     @Returns(200, Recipe).ContentType("application/json")
     find(@Context() context: Context) {
-        let { filter, fields, options } = context.get("criteria");
+        const criteria = context.get("criteria");
+        const { fields, options } = criteria;
+        let { filter } = criteria;
         filter = this.parseFilter(filter);
 
         return B.try(() => this.service.find(context, filter, fields, options));

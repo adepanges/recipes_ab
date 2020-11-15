@@ -35,7 +35,7 @@ if (fs.existsSync(envFile)) {
     console.log(`Using "${envFile}" file to supply config Environment Variables`);
     dotenv.config({ path: envFile });
 } else if (fs.existsSync(".env")) {
-    console.log(`Using ".env" file to supply config Environment Variables`);
+    console.log("Using \".env\" file to supply config Environment Variables");
     dotenv.config({ path: ".env" });
 }
 
@@ -43,8 +43,23 @@ if (fs.existsSync(firebaseFile)) {
     console.log(`Using "${firebaseFile}" file to supply Firebase Config`);
     firebaseConfig = JSON.parse(fs.readFileSync(firebaseFile, { encoding: "utf8", flag: "r" }));
 } else if (fs.existsSync("./firebase.config.json")) {
-    console.log(`Using "firebase.config.json" file to supply Firebase Config`);
+    console.log("Using \"firebase.config.json\" file to supply Firebase Config");
     firebaseConfig = JSON.parse(fs.readFileSync("./firebase.config.json", { encoding: "utf8", flag: "r" }));
+}
+
+if(!firebaseConfig) {
+    firebaseConfig = {
+        "type": process.env["SECRET_FIREBASE_TYPE"] || "",
+        "project_id": process.env["SECRET_FIREBASE_PROJECT_ID"] || "",
+        "private_key_id": process.env["SECRET_FIREBASE_PRIVATE_KEY_ID"] || "",
+        "private_key": process.env["SECRET_FIREBASE_PRIVATE_KEY"] || "",
+        "client_email": process.env["SECRET_FIREBASE_CLIENT_EMAIL"] || "",
+        "client_id": process.env["SECRET_FIREBASE_CLIENT_ID"] || "",
+        "auth_uri": process.env["SECRET_FIREBASE_AUTH_URI"] || "",
+        "token_uri": process.env["SECRET_FIREBASE_TOKEN_URI"] || "",
+        "auth_provider_x509_cert_url": process.env["SECRET_FIREBASE_AUTH_PROVIDER_X509_CERT_URL"] || "",
+        "client_x509_cert_url": process.env["SECRET_FIREBASE_CLIENT_X509_CERT_URL"] || "",
+    };
 }
 
 export const SESSION_SECRET = process.env["SESSION_SECRET"];

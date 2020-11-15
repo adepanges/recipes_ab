@@ -33,7 +33,7 @@ export default class Firebase {
 
     createCustomToken(context: Context, params?: any){
         const uid = uuidv4();
-        let payload = {
+        const payload = {
             isCustomToken: true,
             type: "storage"
         };
