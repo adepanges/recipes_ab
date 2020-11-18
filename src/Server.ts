@@ -132,7 +132,6 @@ export default class Server {
             }
         });
         this.app.get(/^\/(recipe)\/.+$/, (req: any, res: any) => {
-            console.log("asu palah mengeneh");
             res.sendFile(Path.join(clientDir, "index.html"));
         });
     }
